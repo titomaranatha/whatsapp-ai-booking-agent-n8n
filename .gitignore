@@ -1,0 +1,29 @@
+# Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+credentials*.json
+
+# Data that must never be committed (leads, contacts, email content)
+data/
+exports/
+*.csv
+*.xlsx
+*.sqlite
+*.db
+
+# Tooling / OS
+.venv/
+__pycache__/
+node_modules/
+*.log
+.DS_Store
+.idea/
+.vscode/
+
+# Real n8n exports may embed credentials; only the sanitized export is committed
+workflow/*.json
+!workflow/*.sanitized.json
