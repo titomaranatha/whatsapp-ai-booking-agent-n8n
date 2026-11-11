@@ -1,0 +1,27 @@
+flowchart TB
+    subgraph External
+        META["Meta WhatsApp Cloud API"]
+        ANT["Anthropic API"]
+        GSH[("Google Sheets: Bookings")]
+        STAFF["Staff WhatsApp"]
+    end
+    subgraph n8n
+        WT["WhatsApp Trigger"]
+        NORM["Normalize"]
+        AG["AI Agent with Window Buffer Memory"]
+        PR["Parse Reply"]
+        SR["Send Reply"]
+        IB{"Is Booking?"}
+        IE{"Needs Escalation?"}
+        SB["Save Booking"]
+        NB["Notify Staff: Booking"]
+        NE["Notify Staff: Escalation"]
+    end
+    META --> WT --> NORM --> AG
+    AG <--> ANT
+    AG --> PR --> SR --> META
+    SR --> IB
+    SR --> IE
+    IB -->|yes| SB --> GSH
+    SB --> NB --> STAFF
+    IE -->|yes| NE --> STAFF

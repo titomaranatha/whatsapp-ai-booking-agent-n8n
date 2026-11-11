@@ -1,0 +1,18 @@
+flowchart TD
+    A["Incoming WhatsApp webhook"] --> B{"Contains a message?"}
+    B -->|no| X1["Stop"]
+    B -->|yes| C{"Duplicate or stale?"}
+    C -->|yes| X1
+    C -->|no| D{"From staff?"}
+    D -->|yes| D2["Process /bot on or off, then stop"]
+    D -->|no| E{"Paused or over rate limit?"}
+    E -->|yes| X1
+    E -->|no| F["Build context and booking reference"]
+    F --> G["AI Agent returns JSON"]
+    G --> H["Parse Reply with fallback"]
+    H --> I["Send reply to customer"]
+    I --> J{"Booking confirmed and not duplicate?"}
+    J -->|yes| K["Append row to Bookings"]
+    K --> L["Alert staff: booking"]
+    I --> M{"Escalation and not duplicate?"}
+    M -->|yes| N["Alert staff: escalation"]
